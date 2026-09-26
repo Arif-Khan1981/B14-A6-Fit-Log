@@ -1,9 +1,12 @@
 import React from 'react';
 import Link from "next/link";
+import Image from "next/image";
+
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-black px-4 text-white md:px-8">
+  <div className='bg-black px-4'>
+    <div className="navbar  text-white md:px-8 container mx-auto">
 
       {/* LEFT: Logo + Mobile Menu */}
       <div className="navbar-start">
@@ -46,12 +49,22 @@ const Navbar = () => {
           </ul>
         </div>
 
+
         {/* Logo */}
+        
+      
         <Link
           href="/"
-          className="ml-1 text-xl font-black tracking-wider md:text-2xl"
+          className="flex gap-2 ml-1 text-xl font-black tracking-wider md:text-2xl"
         >
-          FIT<span className="text-[#ccff00]">LOG</span>
+          <Image
+            src="/assets/logo.png"
+            alt="FitLog"
+            width={30}
+            height={30}
+            priority
+          />
+          FITLOG
         </Link>
       </div>
 
@@ -64,7 +77,7 @@ const Navbar = () => {
               href="/"
               className="font-semibold text-[#ccff00]"
             >
-              WORKOUT
+              WORKOUTS
             </Link>
           </li>
 
@@ -101,6 +114,7 @@ const Navbar = () => {
 
       </div>
     </div>
+  </div>
   );
 };
 
