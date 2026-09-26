@@ -99,7 +99,7 @@ const Navbar = () => {
         {/* Plan */}
         <Link
           href="/my-plan"
-          className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#d9ff33] md:px-4"
+          className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#718c06] md:px-4"
         >
           PLAN <span>0</span>
         </Link>

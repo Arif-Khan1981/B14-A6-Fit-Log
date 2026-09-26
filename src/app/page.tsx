@@ -2,19 +2,39 @@ import Image from "next/image";
 import Navbar from "./components/Navbar";
 import HeroPage from "./components/Hero";
 import Footer from "./components/Footer";
+import { Workout } from "./types/workout";
+import WorkoutLibrary from "./components/WorkoutLibrary";
 
 
-export default function Home() {
+
+const getWorkouts = async (): Promise<Workout[]> => {
+  const response = await fetch(
+    "https://api.abcz.workers.dev/api/fitlog"
+  );
+  
+  if (!response.ok) {
+  throw new Error("Failed to fetch workouts");
+}
+
+  const data = await response.json();
+
+  return data;
+};
+
+export default async function Home() {
+  const workouts = await getWorkouts();
+
   return (
     <>
       <Navbar />
       <HeroPage />
+      <WorkoutLibrary workouts={workouts} />
       <Footer />
 
       <main className="min-h-screen bg-black text-white">
         <h1 className="p-10 text-4xl font-bold">
           This is FitLog Main Page (page.tsx).
-        </h1>
+         </h1>
       </main>
     </>
   );
