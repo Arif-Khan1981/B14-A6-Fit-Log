@@ -7,15 +7,15 @@ interface WorkoutLibraryProps {
 
 const WorkoutLibrary = ({ workouts }: WorkoutLibraryProps) => {
   return (
-    <section id="library" className="bg-gray-100 px-4 py-16 md:px-8">
+    <section id="library" className="bg-black  px-4 py-16 md:px-8">
       <div className="container mx-auto">
         
         <div className="mb-10">
-          <h2 className="text-4xl font-black text-black">
+          <h2 className="text-4xl font-black text-white">
             THE LIBRARY
           </h2>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-200">
             Twelve lifts covering every major muscle group.
           </p>
         </div>

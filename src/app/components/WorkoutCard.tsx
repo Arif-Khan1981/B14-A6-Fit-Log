@@ -8,7 +8,7 @@ interface WorkoutCardProps {
 const WorkoutCard = ({ workout }: WorkoutCardProps) => {
   return (
     <Link href={`/workouts/${workout.id}`}>
-      <div className="card bg-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
+      <div className="card bg-black text-white shadow-md transition hover:-translate-y-1 hover:shadow-xl">
         <figure>
           <img
             src={workout.image}
@@ -17,12 +17,12 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
           />
         </figure>
 
-        <div className="card-body">
+        <div className="card-body ">
           <div className="flex gap-2">
             {workout.muscleGroups.map((muscle) => (
               <span
                 key={muscle}
-                className="badge badge-outline"
+                className="badge badge-outline bg-[#ccff00] text-black font-bold hover:bg-[#718c06]"
               >
                 {muscle}
               </span>
@@ -33,11 +33,11 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
             {workout.name}
           </h2>
 
-          <p className="text-gray-500">
+          <p className="text-gray-300">
             {workout.equipment}
           </p>
 
-          <div className="flex justify-between text-sm text-gray-600">
+          <div className="flex justify-between text-sm text-gray-300">
             <span>{workout.duration} min</span>
             <span>{workout.caloriesBurned} kcal</span>
             <span>⭐ {workout.rating}</span>
