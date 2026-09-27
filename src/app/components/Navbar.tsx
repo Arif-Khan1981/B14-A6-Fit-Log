@@ -6,7 +6,7 @@ import Image from "next/image";
 const Navbar = () => {
   return (
   <div className='bg-black px-4'>
-    <div className="navbar  text-white md:px-8 container mx-auto">
+    <div className="navbar sticky top-0 z-50 text-white md:px-8 container mx-auto">
 
       {/* LEFT: Logo + Mobile Menu */}
       <div className="navbar-start">

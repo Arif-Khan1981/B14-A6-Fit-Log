@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Navbar from "./components/Navbar";
 import HeroPage from "./components/Hero";
 import Footer from "./components/Footer";
 import { Workout } from "./types/workout";
@@ -26,7 +25,7 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar />
+      
       <HeroPage />
       <WorkoutLibrary workouts={workouts} />
       <Footer />
