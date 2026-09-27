@@ -13,7 +13,7 @@ const WorkoutCard = ({ workout }: WorkoutCardProps) => {
           <img
             src={workout.image}
             alt={workout.name}
-            className="h-56 w-full object-cover"
+            className="h-80 w-full object-fit"
           />
         </figure>
 
