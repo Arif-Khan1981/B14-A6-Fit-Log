@@ -1,18 +1,25 @@
 "use client";
 
 import { Workout } from "../types/workout";
+import { useFitLog } from "../context/FitLogContext";
 
 interface WorkoutActionsProps {
   workout: Workout;
 }
 
 const WorkoutActions = ({ workout }: WorkoutActionsProps) => {
-  const handleAddToPlan = () => {
-    console.log("Add to today's plan:", workout.name);
+  const {
+    addToPlan,
+    saveWorkout,
+  } =useFitLog();
+  
+  
+    const handleAddToPlan = () => {
+    addToPlan(workout)
   };
 
   const handleSave = () => {
-    console.log("Save for later:", workout.name);
+    saveWorkout(workout)
   };
 
   return (
