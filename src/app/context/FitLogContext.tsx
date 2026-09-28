@@ -10,12 +10,15 @@ import { Workout } from "../types/workout";
 interface FitLogContextType {
   plan: Workout[];
   saved: Workout[];
+  completed: number[];
 
   addToPlan: (workout: Workout) => void;
   removeFromPlan: (id: number) => void;
 
   saveWorkout: (workout: Workout) => void;
   removeFromSaved: (id: number) => void;
+
+  markAsDone: (id: number) => void;
 }
 
 const FitLogContext = createContext<FitLogContextType | undefined>(
@@ -29,6 +32,16 @@ export function FitLogProvider({
 }) {
   const [plan, setPlan] = useState<Workout[]>([]);
   const [saved, setSaved] = useState<Workout[]>([]);
+  const [completed, setCompleted] = useState<number[]>([]);
+  const markAsDone = (id: number) => {
+  setCompleted((currentCompleted) => {
+    if (currentCompleted.includes(id)) {
+      return currentCompleted;
+    }
+
+    return [...currentCompleted, id];
+  });
+};
 
   // Load data from localStorage
   useEffect(() => {
@@ -103,6 +116,8 @@ export function FitLogProvider({
         removeFromPlan,
         saveWorkout,
         removeFromSaved,
+        completed,
+        markAsDone,
       }}
     >
       {children}
