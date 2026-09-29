@@ -2,12 +2,24 @@
 
 import Link from "next/link";
 import { useFitLog } from "../context/FitLogContext";
-import React from 'react';
 import Image from "next/image";
+import { usePathname, useSearchParams} from "next/navigation";
 
 
 const Navbar = () => {
   const { plan, saved } = useFitLog();
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const activeTab = searchParams.get("tab");
+
+  const planSelected =
+    pathname === "/my-plan" && activeTab !== "saved";
+
+  const savedSelected =
+    pathname === "/my-plan" && activeTab === "saved";
+
 
   return (
   <div className='bg-black px-4 sticky top-0 z-50'>
@@ -103,16 +115,24 @@ const Navbar = () => {
 
         {/* Plan */}
         <Link
-          href="/my-plan"
-          className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#718c06] md:px-4"
+          href="/my-plan?tab=plan"
+          className={`rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#718c06] md:px-4 ${
+          planSelected
+          ? "bg-[#ccff00] text-black"
+          : "border border-gray-500 bg-transparent text-white hover:border-white"
+          }`}
         >
           PLAN <span>{plan.length}</span>
         </Link>
 
         {/* Saved */}
         <Link
-          href="/my-plan"
-          className="rounded-full border border-gray-500 px-3 py-2 text-xs font-bold text-white transition hover:border-white md:px-4"
+          href="/my-plan?tab=saved"
+          className={`rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold transition  hover:bg-[#718c06] md:px-4 ${
+          savedSelected
+          ? "bg-[#ccff00] text-black"
+          : "border border-gray-500 bg-transparent text-white hover:border-white"
+          }`}
         >
           SAVED <span>{saved.length}</span>
         </Link>

@@ -29,11 +29,7 @@ export default async function Home() {
       <WorkoutLibrary workouts={workouts} />
       
 
-      <main className="min-h-screen bg-black text-white">
-        <h1 className="p-10 text-4xl font-bold">
-          
-         </h1>
-      </main>
+      
     </>
   );
 }

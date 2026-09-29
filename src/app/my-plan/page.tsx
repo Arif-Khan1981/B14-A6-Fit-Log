@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { useFitLog } from "../context/FitLogContext";
 import Toast from "../components/Toast";
 
@@ -17,10 +18,25 @@ const MyPlanPage = () => {
   markAsDone,
 } = useFitLog();
   
-  const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
+  const searchParams = useSearchParams();
+
+  const [activeTab, setActiveTab] = useState<"plan" | "saved">(
+    searchParams.get("tab") === "saved" ? "saved" : "plan"
+    );
+  useEffect(() => {
+  const tab = searchParams.get("tab");
+
+  if (tab === "saved") {
+    setActiveTab("saved");
+  } else {
+    setActiveTab("plan");
+  }
+}, [searchParams]);
+  
+
   const [message, setMessage] = useState("");
 
-const showToast = (text: string) => {
+  const showToast = (text: string) => {
   setMessage(text);
 
   setTimeout(() => {
@@ -94,7 +110,9 @@ const showToast = (text: string) => {
         <div className="mb-8 flex gap-8 border-b border-gray-800">
 
           <button
-            onClick={() => setActiveTab("plan")}
+            onClick={() => {setActiveTab("plan")
+            window.history.pushState({}, "", "/my-plan?tab=plan");
+            }}
             className={`pb-4 text-sm font-bold uppercase transition ${
               activeTab === "plan"
                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"
@@ -105,7 +123,8 @@ const showToast = (text: string) => {
           </button>
 
           <button
-            onClick={() => setActiveTab("saved")}
+            onClick={() => {setActiveTab("saved");window.history.pushState({}, "", "/my-plan?tab=saved");
+  }}
             className={`pb-4 text-sm font-bold uppercase transition ${
               activeTab === "saved"
                 ? "border-b-2 border-[#ccff00] text-[#ccff00]"

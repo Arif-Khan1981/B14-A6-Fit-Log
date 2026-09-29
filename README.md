@@ -1,4 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+1.  Project Name:
+    B14-A6-Fit-Log
+
+2.  Description:
+    FitLog is a responsive workout library built with Next.js, TypeScript, Tailwind CSS, and DaisyUI.
+
+    Users can browse workouts, view workout details, add exercises to today's plan, save workouts for later, mark workouts as completed, and manage their workout plan.
+
+3.   Technologies
+
+    i)      Next.js
+    ii)     React
+    iii)    TypeScript
+    iv)     Tailwind CSS
+    v)      DaisyUI
+
+4.  Features:
+
+    i)  Responsive design for mobile, tablet, and desktop
+    ii) Workout library fetched from API
+    iii) Workout details page
+    iv)  Add workout to Today's Plan
+    v)  Save workouts for later, Remove workouts from Plan or Saved, Mark workouts as Done and Dynamic Plan and Saved counters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
@@ -35,4 +97,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 # B14-A6-Fit-Log
-# B14-A6-Fit-Log
+# B14-A6-Fit-Log -->

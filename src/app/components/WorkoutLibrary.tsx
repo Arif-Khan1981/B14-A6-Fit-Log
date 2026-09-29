@@ -30,7 +30,7 @@ const WorkoutLibrary = ({ workouts }: WorkoutLibraryProps) => {
   return (
     <section
       id="library"
-      className="bg-gray-800 px-4 py-16 md:px-8"
+      className="bg-gray-800 px-4 pt-16 pb-16 md:px-8"
     >
       <div className="container mx-auto">
         {/* Library Header */}
