@@ -1,9 +1,14 @@
-import React from 'react';
+"use client";
+
 import Link from "next/link";
+import { useFitLog } from "../context/FitLogContext";
+import React from 'react';
 import Image from "next/image";
 
 
 const Navbar = () => {
+  const { plan, saved } = useFitLog();
+
   return (
   <div className='bg-black px-4 sticky top-0 z-50'>
     <div className="navbar text-white md:px-8 container mx-auto">
@@ -101,7 +106,7 @@ const Navbar = () => {
           href="/my-plan"
           className="rounded-full bg-[#ccff00] px-3 py-2 text-xs font-bold text-black transition hover:bg-[#718c06] md:px-4"
         >
-          PLAN <span>0</span>
+          PLAN <span>{plan.length}</span>
         </Link>
 
         {/* Saved */}
@@ -109,7 +114,7 @@ const Navbar = () => {
           href="/my-plan"
           className="rounded-full border border-gray-500 px-3 py-2 text-xs font-bold text-white transition hover:border-white md:px-4"
         >
-          SAVED <span>0</span>
+          SAVED <span>{saved.length}</span>
         </Link>
 
       </div>

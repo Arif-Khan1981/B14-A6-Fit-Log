@@ -5,7 +5,6 @@ import { Workout } from "./types/workout";
 import WorkoutLibrary from "./components/WorkoutLibrary";
 
 
-
 const getWorkouts = async (): Promise<Workout[]> => {
   const response = await fetch(
     "https://api.abcz.workers.dev/api/fitlog"
@@ -28,11 +27,11 @@ export default async function Home() {
       
       <HeroPage />
       <WorkoutLibrary workouts={workouts} />
-      <Footer />
+      
 
       <main className="min-h-screen bg-black text-white">
         <h1 className="p-10 text-4xl font-bold">
-          This is FitLog Main Page (page.tsx).
+          
          </h1>
       </main>
     </>

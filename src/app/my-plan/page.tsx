@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useFitLog } from "../context/FitLogContext";
-
+import Toast from "../components/Toast";
 
 
 const MyPlanPage = () => {
@@ -18,6 +18,15 @@ const MyPlanPage = () => {
 } = useFitLog();
   
   const [activeTab, setActiveTab] = useState<"plan" | "saved">("plan");
+  const [message, setMessage] = useState("");
+
+const showToast = (text: string) => {
+  setMessage(text);
+
+  setTimeout(() => {
+    setMessage("");
+  }, 2000);
+};
 
   const activeWorkouts = activeTab === "plan" ? plan : saved;
 
@@ -124,6 +133,12 @@ const MyPlanPage = () => {
                   ? "Add workouts from the library to build your plan."
                   : "Browse the library and add a lift to get today moving."}
               </p>
+              <Link
+                href="/#library"
+                className="btn mt-8 bg-[#ccff00] text-lg font-bold text-black hover:bg-[#ccff00]"
+              >
+                GO TO WORKOUTS
+              </Link>
             </div>
           ) : (
             <div className="grid gap-5 md:grid-cols-2">
@@ -140,63 +155,65 @@ const MyPlanPage = () => {
                   />
 
 
-              <div className="flex-1">
-  <h3 className="font-bold">
-    {workout.name}
-  </h3>
+                <div className="flex-1">
+                  <h3 className="font-bold">
+                    {workout.name}
+                  </h3>
 
-  <p className="mt-1 text-sm text-gray-400">
-    {workout.equipment}
-  </p>
+                  <p className="mt-1 text-sm text-gray-400">
+                    {workout.equipment}
+                  </p>
 
-  <p className="mt-2 text-sm text-gray-500">
-    {workout.duration} min •{" "}
-    {workout.caloriesBurned} kcal
-  </p>
+                  <p className="mt-2 text-sm text-gray-500">
+                    {workout.duration} min •{" "}
+                    {workout.caloriesBurned} kcal
+                  </p>
 
-  <div className="mt-4 flex flex-wrap gap-2">
-    <Link
-      href={`/workouts/${workout.id}`}
-      className="btn btn-sm bg-white text-black hover:bg-gray-200"
-    >
-      View Details
-    </Link>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <Link
+                      href={`/workouts/${workout.id}`}
+                      className="btn btn-sm bg-white text-black hover:bg-gray-200"
+                    >
+                      View Details
+                    </Link>
     
-    {activeTab === "plan" && (
-          <button
-            onClick={() => markAsDone(workout.id)}
-            className="btn btn-sm bg-[#ccff00] text-black hover:bg-[#ccff00]"
-          >
-            {completed.includes(workout.id)
-              ? "Done"
-              : "Mark as Done"}
-          </button>
-        )}
+                    {activeTab === "plan" && (
+                    <button
+                      onClick={() => {
+                      markAsDone(workout.id);
+                      showToast("Workout marked as done");
+                      }}
+                      className="btn btn-sm bg-[#ccff00] text-black hover:bg-[#ccff00]"
+                    >
+                      {completed.includes(workout.id) ? "Done" : "Mark as Done"}
+                    </button>
+                    )}
 
-    <button
-      onClick={() => {
-        if (activeTab === "plan") {
-        removeFromPlan(workout.id);
-        } else {
-        removeFromSaved(workout.id);
-        }
-      }}
-    className="btn btn-sm border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white"
-    >
-    Remove
-    </button>
+                    <button
+                      onClick={() => {
+                      if (activeTab === "plan") {
+                      removeFromPlan(workout.id);
+                      showToast("Workout removed from today's plan");
+                      } else {
+                      removeFromSaved(workout.id);
+                      showToast("Workout removed from saved");
+                      }
+                      }}
+                      className="btn btn-sm border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white"
+                    >
+                      Remove
+                    </button>
 
-  </div>
-              </div>
-                  
+                  </div>
                 </div>
+                  
+              </div>
               ))}
-
             </div>
           )}
 
         </section>
-
+        {message && <Toast message={message} />}
       </div>
     </main>
   );

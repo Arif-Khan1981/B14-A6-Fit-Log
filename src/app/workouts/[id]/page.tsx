@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import { Workout } from "../../types/workout";
 import WorkoutActions from "../../components/WorkoutActions";
 
@@ -7,29 +8,31 @@ interface PageProps {
   }>;
 }
 
-const getWorkout = async (id: string): Promise<Workout> => {
+const getWorkout = async (id: string): Promise<Workout | null> => {
   const response = await fetch(
     `https://api.abcz.workers.dev/api/fitlog/${id}`
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch workout");
+    return null;
   }
 
   return response.json();
 };
 
-export default async function WorkoutDetails({
-  params,
-}: PageProps) {
+export default async function WorkoutDetails({ params }: PageProps) {
   const { id } = await params;
 
   const workout = await getWorkout(id);
 
+  if (!workout) {
+    notFound();
+  }
+
   return (
     <main className="min-h-screen bg-[#0d0f12] px-4 py-5 text-white md:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_1fr] lg:gap-14">
-
+        
         {/* Image */}
         <div>
           <img
@@ -39,9 +42,8 @@ export default async function WorkoutDetails({
           />
         </div>
 
-        {/* Details */}
+        {/* Information */}
         <div className="flex flex-col">
-
           <h1 className="text-4xl font-black uppercase leading-tight tracking-tight md:text-5xl">
             {workout.name}
           </h1>
@@ -64,77 +66,40 @@ export default async function WorkoutDetails({
 
           {/* Specifications */}
           <div className="mt-7 overflow-hidden rounded-2xl border border-gray-800 bg-[#15181e]">
-
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Equipment
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.equipment}
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Equipment</span>
+              <span>{workout.equipment}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Difficulty
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.difficulty}
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Difficulty</span>
+              <span>{workout.difficulty}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Sets
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.sets}
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Sets</span>
+              <span>{workout.sets}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Reps
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.reps}
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Reps</span>
+              <span>{workout.reps}</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Duration
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.duration} min
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Duration</span>
+              <span>{workout.duration} min</span>
             </div>
 
-            <div className="flex items-center justify-between border-b border-gray-800 px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Calories
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.caloriesBurned} kcal
-              </span>
+            <div className="grid grid-cols-2 border-b border-gray-800 p-4">
+              <span className="text-gray-400">Calories</span>
+              <span>{workout.caloriesBurned} kcal</span>
             </div>
 
-            <div className="flex items-center justify-between px-6 py-4">
-              <span className="text-xs font-bold uppercase tracking-wide text-gray-400">
-                Rating
-              </span>
-
-              <span className="text-sm text-gray-200">
-                {workout.rating}
-              </span>
+            <div className="grid grid-cols-2 p-4">
+              <span className="text-gray-400">Rating</span>
+              <span>⭐ {workout.rating}</span>
             </div>
-
           </div>
 
           {/* Instructions */}
@@ -144,26 +109,22 @@ export default async function WorkoutDetails({
             </h2>
 
             <div className="mt-4 space-y-4">
-              {workout.instructions.map(
-                (instruction, index) => (
-                  <div
-                    key={index}
-                    className="flex gap-4 text-sm leading-6 text-gray-300"
-                  >
-                    <span className="min-w-5 font-medium text-gray-400">
-                      {index + 1}.
-                    </span>
+              {workout.instructions.map((instruction, index) => (
+                <div
+                  key={index}
+                  className="flex gap-4 text-sm leading-6 text-gray-300"
+                >
+                  <span className="min-w-5 font-medium text-gray-400">
+                    {index + 1}.
+                  </span>
 
-                    <p>{instruction}</p>
-                  </div>
-                )
-              )}
+                  <p>{instruction}</p>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Add / Save buttons */}
           <WorkoutActions workout={workout} />
-
         </div>
       </div>
     </main>
