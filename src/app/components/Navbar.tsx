@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useFitLog } from "../context/FitLogContext";
 import Image from "next/image";
 import { usePathname, useSearchParams} from "next/navigation";
+import { useState } from "react";
+import { useEffect } from "react";
 
 
 const Navbar = () => {
@@ -19,6 +21,9 @@ const Navbar = () => {
 
   const savedSelected =
     pathname === "/my-plan" && activeTab === "saved";
+
+  const [mounted, setMounted] = useState(false);
+useEffect(() => setMounted(true), []);
 
 
   return (
@@ -122,7 +127,7 @@ const Navbar = () => {
           : "border border-gray-500 bg-transparent text-white hover:border-white"
           }`}
         >
-          PLAN <span>{plan.length}</span>
+          PLAN <span>{mounted?plan.length:0}</span>
         </Link>
 
         {/* Saved */}
@@ -134,7 +139,7 @@ const Navbar = () => {
           : "border border-gray-500 bg-transparent text-white hover:border-white"
           }`}
         >
-          SAVED <span>{saved.length}</span>
+          SAVED <span>{mounted?saved.length:0}</span>
         </Link>
 
       </div>

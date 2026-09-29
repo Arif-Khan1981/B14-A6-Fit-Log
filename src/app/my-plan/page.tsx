@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useFitLog } from "../context/FitLogContext";
 import Toast from "../components/Toast";
+import { useRouter } from "next/navigation";
 
-
-const MyPlanPage = () => {
-  // const { plan, saved } = useFitLog();
+const MyPlanContent = () => {
+  
   const {
   plan,
   saved,
@@ -19,7 +19,7 @@ const MyPlanPage = () => {
 } = useFitLog();
   
   const searchParams = useSearchParams();
-
+  const router =useRouter();
   const [activeTab, setActiveTab] = useState<"plan" | "saved">(
     searchParams.get("tab") === "saved" ? "saved" : "plan"
     );
@@ -110,25 +110,28 @@ const MyPlanPage = () => {
         <div className="mb-8 flex gap-8 border-b border-gray-800">
 
           <button
-            onClick={() => {setActiveTab("plan")
-            window.history.pushState({}, "", "/my-plan?tab=plan");
+            onClick={() => {
+            setActiveTab("plan");
+            router.push("/my-plan?tab=plan");
             }}
             className={`pb-4 text-sm font-bold uppercase transition ${
-              activeTab === "plan"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-gray-500 hover:text-white"
+            activeTab === "plan"
+            ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+            : "text-gray-500 hover:text-white"
             }`}
           >
             Today's Plan ({plan.length})
           </button>
 
           <button
-            onClick={() => {setActiveTab("saved");window.history.pushState({}, "", "/my-plan?tab=saved");
-  }}
+            onClick={() => {
+            setActiveTab("saved");
+            router.push("/my-plan?tab=saved");
+            }}
             className={`pb-4 text-sm font-bold uppercase transition ${
-              activeTab === "saved"
-                ? "border-b-2 border-[#ccff00] text-[#ccff00]"
-                : "text-gray-500 hover:text-white"
+            activeTab === "saved"
+            ? "border-b-2 border-[#ccff00] text-[#ccff00]"
+            : "text-gray-500 hover:text-white"
             }`}
           >
             Saved ({saved.length})
@@ -235,6 +238,22 @@ const MyPlanPage = () => {
         {message && <Toast message={message} />}
       </div>
     </main>
+  );
+};
+
+const MyPlanPage = () => {
+  return (
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-[#0d0f12] px-4 py-10 text-white">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-gray-400">Loading workouts…</p>
+          </div>
+        </main>
+      }
+    >
+      <MyPlanContent />
+    </Suspense>
   );
 };
 

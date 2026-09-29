@@ -4,6 +4,8 @@ import "./globals.css";
 import { FitLogProvider } from "./context/FitLogContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { Suspense } from "react";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <FitLogProvider>
-          <Navbar />
+          <Suspense fallback={null}>
+            <Navbar />
+          </Suspense>
           {children}
           <Footer />
         </FitLogProvider>
